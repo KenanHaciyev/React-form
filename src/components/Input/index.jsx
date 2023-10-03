@@ -1,10 +1,14 @@
 import React from 'react';
 import {Input} from "antd";
+// import {Input} from "antd";
 
-const InputComponent = () => {
+const InputComponent = React.forwardRef(({label,...field}, ref) => {
     return (
-            <Input  placeholder="Basic usage" />
+        <label>
+            {label}
+            <Input ref={ref} {...field}  />
+        </label>
     );
-};
+});
 
 export default InputComponent;

@@ -1,41 +1,48 @@
 import React from 'react';
-import InputComponent from "../Input";
-import { Form} from 'antd';
-import ButtonComponent from "../Button";
+import InputComponent from '../Input';
+import { Form } from 'antd';
+import ButtonComponent from '../Button';
+import { Controller, useForm } from 'react-hook-form';
 
-const FormComponent = () => (
-    <Form
-        labelCol={{
-            span: 8,
-        }}
-        wrapperCol={{
-            span: 20,
-        }}
-        style={{
-            maxWidth: 400,
-        }}
-        labelAlign="right"
-        autoComplete="on"
-    >
+const FormComponent = () => {
+	const {
+		control,
+		formState: { errors },
+		handleSubmit,
+	} = useForm();
 
-            <label>
-                    First Name
-                    <InputComponent/>
-            </label>
-            <label>
-                    Last Name
-                    <InputComponent/>
-            </label>
-            <label>
-                    Email
-                    <InputComponent/>
-            </label>
-            <label>
-                    Phone number
-                    <InputComponent/>
-            </label>
-            <ButtonComponent/>
+	const onFinish = args => console.log(args);
 
-    </Form>
-);
+	return (
+		<Form
+			onFinish={handleSubmit(onFinish)}
+			style={{
+				maxWidth: 300,
+			}}
+			autoComplete="on"
+		>
+			<Controller
+				name="firstname"
+				control={control}
+				render={({ field }) => <InputComponent {...field} label="First Name" />}
+			/>
+			<Controller
+				name="secondname"
+				control={control}
+				render={({ field }) => <InputComponent {...field} label="Second Name" />}
+			/>
+			<Controller
+				name="email"
+				control={control}
+				render={({ field }) => <InputComponent {...field} label="Email" />}
+			/>
+			<Controller
+				name="phonenumber"
+				control={control}
+				render={({ field }) => <InputComponent {...field} label="Phone Number" />}
+			/>
+			<ButtonComponent />
+		</Form>
+	);
+};
 export default FormComponent;
