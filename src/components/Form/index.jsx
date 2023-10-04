@@ -1,48 +1,69 @@
-import React from 'react';
-import InputComponent from '../Input';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
+
+import ControllerComponent from '../ControllerComponent';
+import { generateErrors } from '../../data/inputPropsData';
+import { schema } from '../../data/validationSchemaData';
 import ButtonComponent from '../Button';
-import { Controller, useForm } from 'react-hook-form';
+
+import styles from './Form.module.css';
 
 const FormComponent = () => {
+	const [isIconsVisible, setIsIconsVisible] = useState(false);
+	const [isRegistered, setIsRegistered] = useState(false);
+	const [isErrorWarning, setIsErrorWarning] = useState(false);
+
 	const {
 		control,
 		formState: { errors },
 		handleSubmit,
-	} = useForm();
+		reset,
+	} = useForm({
+		resolver: yupResolver(schema),
+	});
 
-	const onFinish = args => console.log(args);
+	const errorMessages = generateErrors(errors);
+
+	const onSubmit = args => {
+		console.log(args);
+		setIsErrorWarning(false);
+		setIsRegistered(true);
+		setIsIconsVisible(false); //for hiding input's icons after reset fields
+		reset();
+		setTimeout(() => setIsRegistered(false), 2000);  //auto delete "success register" window
+	};
+
+	const showElements = () => {
+		setIsIconsVisible(true);
+		setIsErrorWarning(true); //show warning when we clicked but couldn't submit
+	};
 
 	return (
-		<Form
-			onFinish={handleSubmit(onFinish)}
-			style={{
-				maxWidth: 300,
-			}}
-			autoComplete="on"
-		>
-			<Controller
-				name="firstname"
-				control={control}
-				render={({ field }) => <InputComponent {...field} label="First Name" />}
-			/>
-			<Controller
-				name="secondname"
-				control={control}
-				render={({ field }) => <InputComponent {...field} label="Second Name" />}
-			/>
-			<Controller
-				name="email"
-				control={control}
-				render={({ field }) => <InputComponent {...field} label="Email" />}
-			/>
-			<Controller
-				name="phonenumber"
-				control={control}
-				render={({ field }) => <InputComponent {...field} label="Phone Number" />}
-			/>
-			<ButtonComponent />
-		</Form>
+		<>
+			{isErrorWarning && !isRegistered && <h2 className={styles.isError}>Error, Please, check all fields</h2>}
+			{isRegistered && <h2 className={styles.isRegistered}>Registration done successfully</h2>}
+			<Form
+				layout="vertical"
+				onFinish={handleSubmit(onSubmit)}
+				style={{
+					maxWidth: 300,
+					padding: 5,
+				}}
+				autoComplete="on"
+			>
+				{errorMessages.map(errorData => (
+					<ControllerComponent
+						key={errorData.id}
+						data={errorData}
+						control={control}
+						isIconsVisible={isIconsVisible}
+					/>
+				))}
+				<ButtonComponent showElements={showElements} />
+			</Form>
+		</>
 	);
 };
 export default FormComponent;

@@ -1,14 +1,28 @@
 import React from 'react';
-import {Input} from "antd";
-// import {Input} from "antd";
+import { Form, Input } from 'antd';
 
-const InputComponent = React.forwardRef(({label,...field}, ref) => {
-    return (
-        <label>
-            {label}
-            <Input ref={ref} {...field}  />
-        </label>
-    );
-});
+const InputComponent = React.forwardRef(
+	({ errorMessage, label, isIconsVisible, placeholder = label, ...field }, ref) => {
+		return (
+			<Form.Item
+				hasFeedback
+				validateStatus={errorMessage ? 'error' : !errorMessage && isIconsVisible ? 'success' : ''}
+				label={label}
+				style={{ height: '60px' }}
+			>
+				<div>
+					<Input
+						ref={ref}
+						{...field}
+						placeholder={placeholder}
+						allowClear
+						style={{ width: '290px' }}
+					/>
+					<small style={{ color: 'crimson' }}>{errorMessage}</small>
+				</div>
+			</Form.Item>
+		);
+	},
+);
 
 export default InputComponent;
