@@ -7,7 +7,7 @@ export const schema = yup.object({
 		.string()
 		.required('Email is required')
 		.min(6, 'Minimum 6 letters')
-		.email('Email address is incorrect')
+		.email('Email address must have symbol @')
 		.trim(),
 	Mobile: yup
 		.string()

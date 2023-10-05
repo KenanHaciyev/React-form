@@ -10,7 +10,7 @@ const ButtonComponent = ({ showElements }) => {
 			}}
 		>
 			<Button onClick={showElements} style={{ width: '100%' }} type="primary" htmlType="submit">
-				Submit
+				Sign up
 			</Button>
 		</Form.Item>
 	);

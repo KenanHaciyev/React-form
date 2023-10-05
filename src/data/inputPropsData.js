@@ -1,5 +1,5 @@
 //I did this not static because it's required dynamic "errors" which located in useForm()
-export const generateErrors = errors => {
+export const inputsDataGenerate = errors => {
 	return [
 		{
 			id: 1,

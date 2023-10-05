@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { Form } from 'antd';
 
+import { inputsDataGenerate } from '../../data/inputPropsData';
 import ControllerComponent from '../ControllerComponent';
-import { generateErrors } from '../../data/inputPropsData';
 import { schema } from '../../data/validationSchemaData';
 import ButtonComponent from '../Button';
 
@@ -24,15 +24,15 @@ const FormComponent = () => {
 		resolver: yupResolver(schema),
 	});
 
-	const errorMessages = generateErrors(errors);
+	const inputsData = inputsDataGenerate(errors);
 
 	const onSubmit = args => {
-		console.log(args);
+		console.log(args); //I remain this console intentionally, for checking data which we receive from inputs
 		setIsErrorWarning(false);
 		setIsRegistered(true);
 		setIsIconsVisible(false); //for hiding input's icons after reset fields
 		reset();
-		setTimeout(() => setIsRegistered(false), 2000);  //auto delete "success register" window
+		setTimeout(() => setIsRegistered(false), 2000); //auto delete "success register" window
 	};
 
 	const showElements = () => {
@@ -42,21 +42,24 @@ const FormComponent = () => {
 
 	return (
 		<>
-			{isErrorWarning && !isRegistered && <h2 className={styles.isError}>Error, Please, check all fields</h2>}
+			{!isErrorWarning && !isRegistered && <h2 className={styles.title}>Registration card</h2>}
+
+			{isErrorWarning && !isRegistered && (
+				<h2 className={styles.isError}>Error, Please, check all fields</h2>
+			)}
+
 			{isRegistered && <h2 className={styles.isRegistered}>Registration done successfully</h2>}
+
 			<Form
 				layout="vertical"
 				onFinish={handleSubmit(onSubmit)}
-				style={{
-					maxWidth: 300,
-					padding: 5,
-				}}
+				className={styles.form}
 				autoComplete="on"
 			>
-				{errorMessages.map(errorData => (
+				{inputsData.map(inputData => (
 					<ControllerComponent
-						key={errorData.id}
-						data={errorData}
+						key={inputData.id}
+						data={inputData}
 						control={control}
 						isIconsVisible={isIconsVisible}
 					/>

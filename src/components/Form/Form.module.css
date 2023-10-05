@@ -9,6 +9,7 @@
 	padding: 10px;
 	text-transform: capitalize;
 	background-color: rgb(21 76 39 / 68%);
+	text-shadow: 2px 1px 4px rgba(0, 255, 5, 0.57);
 }
 
 .isError {
@@ -22,4 +23,30 @@
 	padding: 10px;
 	text-transform: capitalize;
 	background-color: rgb(103 30 30 / 70%);
+	text-shadow: 1px 1px 4px rgb(233 21 27 / 67%);
+}
+
+.title {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 600;
+	border: 1px solid rgb(29 43 243 / 87%);
+	border-radius: 4px;
+	margin-bottom: 10px;
+	text-align: center;
+	padding: 10px;
+	text-transform: uppercase;
+	background-color: #457bbdd1;
+	text-shadow: 2px 1px 5px rgb(29 43 243 / 87%);
+}
+
+.form {
+	max-width: 320px;
+	padding: 30px 15px 15px;
+	border: 1px solid rgba(135,134,129,0.42);
+	border-radius: 5px;
+	background-color: #dededd9e;
+	box-shadow: 3px -3px 6px -2px rgba(0, 0, 0, 0.61);
+	-webkit-box-shadow: 3px -3px 6px -2px rgba(0,0,0,0.26);
+	-moz-box-shadow: 3px -3px 6px -2px rgba(0,0,0,0.76);
 }

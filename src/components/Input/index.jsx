@@ -16,7 +16,10 @@ const InputComponent = React.forwardRef(
 						{...field}
 						placeholder={placeholder}
 						allowClear
-						style={{ width: '290px' }}
+						style={{
+							width: '290px',
+							border: !errorMessage && isIconsVisible ? ' 1px solid #3bd23b' : '',
+						}}
 					/>
 					<small style={{ color: 'crimson' }}>{errorMessage}</small>
 				</div>
